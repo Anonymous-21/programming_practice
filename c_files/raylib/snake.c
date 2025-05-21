@@ -131,7 +131,7 @@ snake_update(Snake* snake)
       return true;
     if (snake_collision_walls(snake))
       return true;
-      
+
     snake->list[0] = (Rectangle){ snake->x, snake->y, BLOCK_SIZE, BLOCK_SIZE };
     
   }
@@ -228,6 +228,7 @@ center_and_draw_text(const char* text,
 
   DrawText(text, text_x, text_y, font_size, color);
 }
+
 // MAIN
 int
 main(void)
@@ -280,6 +281,7 @@ main(void)
         score = 0;
         game_over = false;
         show_text = false;
+        last_time = 0.0f;
 
         snake_init(&snake);
         food_init(&food, &snake);

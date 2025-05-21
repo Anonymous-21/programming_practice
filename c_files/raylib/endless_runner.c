@@ -116,7 +116,10 @@ enemies_draw(Enemies* enemies)
 }
 
 void
-enemies_update(Enemies* enemies, int* score, Rectangle player_rect)
+enemies_update(Enemies* enemies,
+               int* score,
+               bool* game_over,
+               Rectangle player_rect)
 {
   // add enemy to list if necessary
   Enemy last_enemy = enemies->list[enemies->size - 1];
@@ -133,13 +136,18 @@ enemies_update(Enemies* enemies, int* score, Rectangle player_rect)
   for (int i = 0; i < enemies->size; i++) {
     enemy_update(&enemies->list[i]);
 
+    // check game_over condition
+    if (CheckCollisionRecs(enemies->list[i].rect, player_rect)) {
+      *game_over = true;
+      return;
+    }
+
     // update score
-    Enemy current_enemy = enemies->list[i];
-    if (player_rect.x > current_enemy.rect.x + current_enemy.rect.width &&
-        !current_enemy.scored) {
+    if (player_rect.x > enemies->list[i].rect.x + enemies->list[i].rect.width &&
+        !enemies->list[i].scored) {
 
       *score += 1;
-      current_enemy.scored = true;
+      enemies->list[i].scored = true;
     }
 
     // remove enemy from list
@@ -150,6 +158,9 @@ enemies_update(Enemies* enemies, int* score, Rectangle player_rect)
       Enemy empty_enemy = { 0 };
       enemies->list[enemies->size] = empty_enemy;
       enemies->size -= 1;
+
+      // reset current index position
+      i--;
     }
   }
 }
@@ -176,7 +187,7 @@ int
 main(void)
 {
   const int SCREEN_WIDTH = 800;
-  const int SCREEN_HEIGHT = 200;
+  const int SCREEN_HEIGHT = 250;
   const char SCREEN_TITLE[] = "Endless Runner";
   const Color SCREEN_BACKGROUND = SKYBLUE;
 
@@ -186,6 +197,10 @@ main(void)
   int score = 0;
   bool game_over = false;
 
+  bool show_text = false;
+  float last_time = 0.0f;
+  float blink_interval = 1.0f;
+
   Enemies enemies;
   Player player;
 
@@ -194,13 +209,24 @@ main(void)
 
   while (!WindowShouldClose()) {
     // UPDATES
+    // blink game over text
+    if (game_over) {
+      float current_time = GetTime();
+      if (current_time - last_time >= blink_interval) {
+        show_text = !show_text;
+        last_time = current_time;
+      }
+    }
+
     if (!game_over) {
       player_update(&player);
-      enemies_update(&enemies, &score, player.rect);
+      enemies_update(&enemies, &score, &game_over, player.rect);
     } else {
       if (IsKeyPressed(KEY_ENTER)) {
         score = 0;
         game_over = false;
+        show_text = false;
+        last_time = 0.0f;
 
         player_init(&player);
         enemies_init(&enemies);
@@ -220,13 +246,15 @@ main(void)
       center_and_draw_text(
         "GAME OVER", 40, 0, 0, GetScreenWidth(), GetScreenHeight(), BLACK);
 
-      center_and_draw_text("press ENTER to restart",
-                           30,
-                           0,
-                           0,
-                           GetScreenWidth(),
-                           GetScreenHeight() + 100,
-                           BLACK);
+      if (show_text) {
+        center_and_draw_text("press ENTER to restart",
+                             30,
+                             0,
+                             0,
+                             GetScreenWidth(),
+                             GetScreenHeight() + 100,
+                             BLACK);
+      }
     }
 
     EndDrawing();

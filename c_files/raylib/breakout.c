@@ -322,6 +322,7 @@ main(void)
         game_won = false;
         game_over = false;
         show_text = false;
+        last_time = 0.0f;
 
         paddle_init(&paddle);
         ball_init(&ball, &paddle);
