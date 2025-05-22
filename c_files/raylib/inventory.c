@@ -48,6 +48,8 @@ main(void)
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
 
   Vector2 position = (Vector2){ 10, 10 };
+  Item empty_item = { 0 };
+
   float last_current_time = 0.0f;
   float interval = 1.0f;
 
@@ -99,6 +101,7 @@ main(void)
 
         // remove item from inventory
         inventory[i] = inventory[inventory_size - 1];
+        inventory[inventory_size - 1] = empty_item;
         inventory_size--;
         break;
       }
@@ -139,6 +142,7 @@ main(void)
 
             // remove item from item_list
             item_list[i] = item_list[item_list_size - 1];
+            item_list[item_list_size - 1] = empty_item;
             item_list_size--;
             break;
           }
@@ -162,7 +166,7 @@ main(void)
                inventory[i].rect.y);
       }
 
-      for (int i = 0; i < item_list_size; i++) {
+      for (int i = 0; i < NUM_OF_ITEMS; i++) {
         printf("ITEM LIST\n");
         printf("ID: %d, POSITION: (%0.2f, %0.2f)\n",
                item_list[i].id,
