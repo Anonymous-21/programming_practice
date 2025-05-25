@@ -14,3 +14,4 @@ def center_and_draw_text(
     text_y: int = rect_y + rect_height // 2 - font_size // 2
 
     p.draw_text(text, text_x, text_y, font_size, color)
+

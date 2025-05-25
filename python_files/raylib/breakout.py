@@ -1,6 +1,7 @@
 import pyray as p
 
 from utility.center_and_draw_text import center_and_draw_text
+from utility.timer import IntervalTimer
 
 SCREEN_WIDTH: int = 800
 SCREEN_HEIGHT: int = 600
@@ -69,22 +70,21 @@ class Ball:
             self.paddle.rect.x + self.paddle.rect.width / 2,
             self.paddle.rect.y - self.radius,
         )
-        self.speed: float = 400.0
+        self.speed: float = 300.0
+        self.speed_increment: float = 10.0
         self.direction: p.Vector2 = p.Vector2(
             -1 if p.get_random_value(0, 1) == 0 else 1,
             -1 if p.get_random_value(0, 1) == 0 else 1,
         )
         self.color: p.Color = p.RED
         self.active: bool = False
-        self.show_text: bool = False
-        self.last_time: float = p.get_time()
-        self.blink_interval: float = 1.0
+        self.interval_timer: IntervalTimer = IntervalTimer(1.0)
 
     def reset(self) -> None:
         self.__init__(self.paddle)
 
     def draw(self) -> None:
-        if self.show_text:
+        if self.interval_timer.is_ready() and not self.active:
             center_and_draw_text(
                 "press SPACE to begin",
                 30,
@@ -97,7 +97,8 @@ class Ball:
         p.draw_circle_v(self.pos, self.radius, self.color)
 
     def update(self) -> None:
-        # show blinking text
+        self.interval_timer.update()
+
         if not self.active:
             # update ball position
             self.pos: p.Vector2 = p.Vector2(
@@ -105,10 +106,6 @@ class Ball:
                 self.paddle.rect.y - self.radius,
             )
 
-            current_time: float = p.get_time()
-            if current_time - self.last_time >= self.blink_interval:
-                self.last_time = current_time
-                self.show_text = not self.show_text
 
         # activate ball
         if p.is_key_pressed(p.KeyboardKey.KEY_SPACE):
@@ -131,26 +128,21 @@ class Ball:
             self.direction.y *= -1
 
 
+
 def main() -> None:
     p.init_window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
     lives: int = 5
     game_over: bool = False
     game_won: bool = False
-    show_text: bool = False
-    last_time: float = p.get_time()
-    blink_interval: float = 1.0
+    interval_timer: IntervalTimer = IntervalTimer(1.0)
 
     bricks: Bricks = Bricks()
     paddle: Paddle = Paddle()
     ball: Ball = Ball(paddle)
 
     while not p.window_should_close():
-        if game_over or game_won:
-            current_time: float = p.get_time()
-            if current_time - last_time >= blink_interval:
-                show_text = not show_text
-                last_time = current_time
+        interval_timer.update()
 
         if lives <= 0:
             game_over = True
@@ -165,6 +157,9 @@ def main() -> None:
             # ball collision paddle
             if p.check_collision_circle_rec(ball.pos, ball.radius, paddle.rect):
                 ball.direction.y *= -1
+
+                # increment ball speed
+                ball.speed += ball.speed_increment * p.get_frame_time()
 
             # update lives
             if ball.pos.y > p.get_screen_height() - ball.radius:
@@ -197,12 +192,13 @@ def main() -> None:
             bricks.draw()
             paddle.draw()
             ball.draw()
-        elif game_over:
+        
+        if game_over:
             center_and_draw_text(
                 "GAME OVER", 40, 0, 0, p.get_screen_width(), p.get_screen_height()
             )
 
-            if show_text:
+            if interval_timer.is_ready():
                 center_and_draw_text(
                     "press ENTER to restart",
                     30,
@@ -211,12 +207,13 @@ def main() -> None:
                     p.get_screen_width(),
                     p.get_screen_height() + 300,
                 )
-        elif game_won:
+        
+        if game_won:
             center_and_draw_text(
                 "YOU WIN", 40, 0, 0, p.get_screen_width(), p.get_screen_height()
             )
 
-            if show_text:
+            if interval_timer.is_ready():
                 center_and_draw_text(
                     "press ENTER to restart",
                     30,

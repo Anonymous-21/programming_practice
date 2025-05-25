@@ -1,6 +1,7 @@
 import pyray as p
 
 from utility.center_and_draw_text import center_and_draw_text
+from utility.timer import IntervalTimer
 
 SCREEN_WIDTH: int = 800
 SCREEN_HEIGHT: int = 600
@@ -15,16 +16,15 @@ class Ball:
         self.x: float = self.initial_x
         self.y: float = self.initial_y
         self.radius: float = 10.0
-        self.speed: float = 400.0
+        self.speed: float = 300.0
+        self.speed_increment: float = 10.0
         self.direction: p.Vector2 = p.Vector2(
             -1 if p.get_random_value(0, 1) == 0 else 1,
             -1 if p.get_random_value(0, 1) == 0 else 1,
         )
         self.color: p.Color = p.RED
         self.active: bool = False
-        self.show_text: bool = False
-        self.last_current_time: float = p.get_time()
-        self.blink_interval: float = 1.0
+        self.interval_timer: IntervalTimer = IntervalTimer(1.0)
 
     def reset(self) -> None:
         self.x = self.initial_x
@@ -34,10 +34,9 @@ class Ball:
             -1 if p.get_random_value(0, 1) == 0 else 1,
         )
         self.active = False
-        self.show_text = False
 
     def draw(self) -> None:
-        if self.show_text:
+        if self.interval_timer.is_ready() and not self.active:
             center_and_draw_text(
                 "press SPACE to begin",
                 30,
@@ -50,23 +49,22 @@ class Ball:
         p.draw_circle_v(p.Vector2(self.x, self.y), self.radius, self.color)
 
     def update(self) -> None:
-        if not self.active:
-            current_time: float = p.get_time()
-            if current_time - self.last_current_time >= self.blink_interval:
-                self.last_current_time = current_time
-                self.show_text = not self.show_text
+        self.interval_timer.update()
 
+        # activate ball
         if p.is_key_pressed(p.KeyboardKey.KEY_SPACE):
             self.active = not self.active
-            self.show_text = False
 
+        # move ball
         if self.active:
             self.x += self.direction.x * self.speed * p.get_frame_time()
             self.y += self.direction.y * self.speed * p.get_frame_time()
 
+        # normalize direction vector
         if self.direction.x != 0 and self.direction.y != 0:
             self.direction = p.vector2_normalize(self.direction)
 
+        # ball bounds
         if self.y < self.radius or self.y > p.get_screen_height() - self.radius:
             self.direction.y *= -1
 
@@ -138,12 +136,19 @@ def main() -> None:
             p.Rectangle(player.x, player.y, player.width, player.height),
         ):
             ball.direction.x *= -1
+
+            # increment ball speed
+            ball.speed += ball.speed_increment * p.get_frame_time()
+
         if p.check_collision_circle_rec(
             p.Vector2(ball.x, ball.y),
             ball.radius,
             p.Rectangle(ai.x, ai.y, ai.width, ai.height),
         ):
             ball.direction.x *= -1
+
+            # increment ball speed
+            ball.speed += ball.speed_increment * p.get_frame_time()
 
         # update scores
         if ball.x < ball.radius:
