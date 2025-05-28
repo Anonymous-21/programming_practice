@@ -1,28 +1,44 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-static inline int
-max_int(int a, int b)
-{
-  return (a > b) ? a : b;
-}
+#include <raylib.h>
 
-static inline int
-min_int(int a, int b)
-{
-  return (a < b) ? a : b;
-}
+// min/max functions
+float
+max_float(float a, float b);
+float
+min_float(float a, float b);
+int
+max_int(int a, int b);
+int
+min_int(int a, int b);
 
-static inline float
-max_float(float a, float b)
-{
-  return (a > b) ? a : b;
-}
+// interval timer
 
-static inline float
-min_float(float a, float b)
+typedef struct IntervalTimer
 {
-  return (a < b) ? a : b;
-}
+	float last_updated_time;
+	float interval_seconds;
+	bool toggled;
+
+} IntervalTimer;
+
+void
+interval_timer_init(IntervalTimer* interval_timer, float interval_seconds);
+void
+interval_timer_update(IntervalTimer* interval_timer);
+bool
+interval_timer_toggled(IntervalTimer* interval_timer);
+
+// center text
+
+void
+center_and_draw_text(char* text,
+					 int font_size,
+					 int rect_x,
+					 int rect_y,
+					 int rect_width,
+					 int rect_height,
+					 Color color);
 
 #endif // UTILS_H

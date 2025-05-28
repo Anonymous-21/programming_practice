@@ -1,0 +1,17 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#include <raylib.h>
+
+typedef enum GameState
+{
+	STATE_MAIN,
+	STATE_PLAYER_SELECTION,
+	STATE_PLAYER_TYPE_STATS,
+	STATE_PLAYER_ACTION,
+	STATE_PAUSE,
+	STATE_QUIT
+
+} GameState;
+
+#endif // CONSTANTS_H

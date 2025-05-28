@@ -1,0 +1,17 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#include <raylib.h>
+
+#define SCREEN_WIDTH 1200
+#define SCREEN_HEIGHT 800
+#define SCREEN_TITLE "Text Rpg"
+#define SCREEN_BACKGROUND LIGHTGRAY
+
+#define NUM_MAIN_MENU_ITEMS 2
+#define MAIN_MENU_ITEMS_STR_LEN 10
+
+#define NUM_PLAYER_SELECTION_ITEMS 10
+#define PLAYER_SELECTION_STR_LEN 10
+
+#endif // CONSTANTS_H
