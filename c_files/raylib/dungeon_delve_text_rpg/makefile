@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Iinclude -O2
+CFLAGS = -Wall -Werror -Iinclude -O2
 LDFLAGS = -lraylib -lm -ldl -lpthread -lGL
 
 # Directories

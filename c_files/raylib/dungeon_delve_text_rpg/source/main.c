@@ -1,6 +1,8 @@
-#include "../include/game_data.h"
 #include "../include/menu.h"
+#include "../include/game_data.h"
 #include <raylib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int
 main(void)
@@ -20,16 +22,22 @@ main(void)
 	Rectangle layout_rect_main_menu =
 	  (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() };
 	Rectangle layout_rect_player_selection_menu =
-	  (Rectangle){ 0, 0, GetScreenWidth() / 2, GetScreenHeight() };
+	  (Rectangle){ 0, 0, GetScreenWidth() / 2, GetScreenHeight()/2 - 100 };
+
+    const char* player_selection_menu_items[hero_array_size];
+    for (int i = 0; i < hero_array_size; i++)
+    {
+        player_selection_menu_items[i] = hero_array[i].type;
+    }
 
 	menu_init(&main_menu,
 			  main_menu_items,
-			  main_menu_item_count,
+			  main_menu_item_size,
 			  40,
 			  layout_rect_main_menu);
 	menu_init(&player_selection_menu,
 			  player_selection_menu_items,
-			  player_selection_menu_item_count,
+			  hero_array_size,
 			  40,
 			  layout_rect_player_selection_menu);
 
@@ -40,7 +48,7 @@ main(void)
 		if (current_state == STATE_MAIN_MENU) {
 			menu_draw(&main_menu);
 			menu_update(&main_menu);
-			if (IsKeyPressed(KEY_ENTER)) {
+			if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) {
 				if (main_menu.selected == 0) {
 					current_state = STATE_PLAYER_TYPE_SELECTION;
 				} else if (main_menu.selected == 1) {
@@ -56,6 +64,8 @@ main(void)
 	}
 
 	menu_free(&main_menu);
+	menu_free(&player_selection_menu);
+
 	CloseWindow();
 
 	return 0;

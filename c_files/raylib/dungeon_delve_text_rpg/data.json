@@ -132,7 +132,7 @@
       "health_growth": 1.05,
       "damage_growth": 1.15,
       "defense_growth": 1.03,
-      "notes": "Counters large mobs (Zombies, Skeletons)"
+      "notes": "sizeers large mobs (Zombies, Skeletons)"
     },
     {
       "type": "Cleric",
@@ -187,7 +187,7 @@
       "health_growth": 1.06,
       "damage_growth": 1.10,
       "defense_growth": 1.04,
-      "notes": "Counters undead enemies, raises minions"
+      "notes": "sizeers undead enemies, raises minions"
     },
     {
       "type": "Druid",
@@ -209,7 +209,7 @@
       "health_growth": 1.09,
       "damage_growth": 1.10,
       "defense_growth": 1.06,
-      "notes": "Counters Demons and Vampires, buffs allies"
+      "notes": "sizeers Demons and Vampires, buffs allies"
     }
   ]
 }

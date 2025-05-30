@@ -16,7 +16,7 @@ typedef struct MenuItem
 typedef struct Menu
 {
 	MenuItem* items;
-    int item_count;
+    int item_size;
 	int selected;
 	int vertical_gap;
     Rectangle layout_rect;
@@ -24,7 +24,7 @@ typedef struct Menu
 } Menu;
 
 void
-menu_init(Menu* menu, const char* item_arr[], int item_count, int font_size, Rectangle layout_rect);
+menu_init(Menu* menu, const char* item_arr[], int item_size, int font_size, Rectangle layout_rect);
 void
 menu_draw(Menu* menu);
 void
