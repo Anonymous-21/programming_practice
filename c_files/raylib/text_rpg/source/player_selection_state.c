@@ -9,7 +9,8 @@ void
 player_selection_init(PlayerSelection* player_selection)
 {
 	player_selection->selected = 0;
-	player_selection->items = malloc(player_menu_items_count * sizeof(MenuItem));
+	player_selection->items =
+	  malloc(player_menu_items_count * sizeof(MenuItem));
 	if (player_selection->items == NULL) {
 		fprintf(stderr, "Memory not allocated to player_selection->items\n");
 		exit(EXIT_FAILURE);

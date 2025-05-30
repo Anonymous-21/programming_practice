@@ -18,6 +18,7 @@ typedef struct BasePlayer
 	const float defense;
 	const float health_growth;
 	const float damage_growth;
+    const float defense_growth;
 
 } BasePlayer;
 
@@ -29,6 +30,7 @@ typedef struct BaseEnemy
 	const float defense;
 	const float health_growth;
 	const float damage_growth;
+    const float defense_growth;
 
 } BaseEnemy;
 
