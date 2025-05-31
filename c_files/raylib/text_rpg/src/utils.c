@@ -17,11 +17,11 @@ strdup_clone(const char* str)
 
 	char* copy = malloc(size * sizeof(char));
 	if (copy == NULL) {
-		fprintf(stderr, "Memory allocation falied\n");
+		fprintf(stderr, "Memory allocation failed\n");
 		exit(EXIT_FAILURE);
 	}
 
-	strncpy(copy, str, size);
+	strcpy(copy, str);
 
 	return copy;
 }
