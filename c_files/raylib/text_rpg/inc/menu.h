@@ -14,7 +14,6 @@ typedef struct Menu
     int font_size;
     int text_gap;
     int text_height;
-    int margin;
     Rectangle layout_rect;
 
 } Menu;
@@ -25,7 +24,6 @@ menu_init(Menu* menu,
           int arr_size,
           int font_size,
           int text_gap,
-          int margin,
           Rectangle layout_rect);
 void
 menu_draw(Menu* menu);

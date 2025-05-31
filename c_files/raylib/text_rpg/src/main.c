@@ -15,6 +15,7 @@ main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
 
     GameState current_state = STATE_MAIN_MENU;
+    int menu_margin = 40; // 20 up and 20 down
 
     Menu main_menu;
     Menu player_selection_menu;
@@ -24,8 +25,7 @@ main(void)
               main_menu_items_size,
               40,
               5,
-              20,
-              (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() });
+              (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_margin });
 
     const char** player_selection_menu_items = malloc(hero_types_size * sizeof(const char*));
     if (player_selection_menu_items == NULL)
@@ -44,8 +44,7 @@ main(void)
               hero_types_size,
               40,
               5,
-              20,
-              (Rectangle){ 0, 0, GetScreenWidth() / 2, GetScreenHeight() });
+              (Rectangle){ 0, 0, GetScreenWidth() / 2, GetScreenHeight() - menu_margin});
 
     while (!WindowShouldClose())
     {

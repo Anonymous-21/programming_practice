@@ -9,7 +9,6 @@ menu_init(Menu* menu,
           int arr_size,
           int font_size,
           int text_gap,
-          int margin,
           Rectangle layout_rect)
 {
     menu->arr = malloc(arr_size * sizeof( const char*));
@@ -27,13 +26,12 @@ menu_init(Menu* menu,
     menu->arr_size = arr_size;
     menu->font_size = font_size;
     menu->text_gap = text_gap;
-    menu->margin = margin;
     menu->layout_rect = layout_rect;
 
     menu->selected = 0;
     menu->first_visible_element = 0;
     menu->text_height = font_size + text_gap;
-    menu->max_visible_elements = (layout_rect.height - text_gap - margin * 2) / menu->text_height;
+    menu->max_visible_elements = (layout_rect.height - text_gap) / menu->text_height;
     menu->max_visible_text_height =
       (font_size * arr_size) + (text_gap * (arr_size - 1)); // last gap does not count
 }
