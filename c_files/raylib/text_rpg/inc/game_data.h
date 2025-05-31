@@ -29,7 +29,7 @@ typedef struct BaseHero
 
 } BaseHero;
 
-const BaseHero hero_types[];
+extern const BaseHero hero_types[];
 extern const int hero_types_size;
 
 // enemy data
@@ -45,7 +45,7 @@ typedef struct BaseEnemy
 
 } BaseEnemy;
 
-const BaseEnemy enemy_types[];
+extern const BaseEnemy enemy_types[];
 extern const int enemy_types_size;
 
 #endif // GAME_DATA_H

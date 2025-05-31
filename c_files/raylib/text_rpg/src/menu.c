@@ -13,7 +13,7 @@ menu_init(Menu* menu,
           int margin,
           Rectangle layout_rect)
 {
-    menu->arr = ( const char** ) malloc(arr_size * sizeof(char*));
+    menu->arr = malloc(arr_size * sizeof( const char*));
     if (menu->arr == NULL)
     {
         fprintf(stderr, "Memory allocation failed\n");
@@ -22,14 +22,15 @@ menu_init(Menu* menu,
 
     for (int i = 0; i < arr_size; i++)
     {
-        menu->arr[i] = ( char* ) malloc((strlen(arr[i]) + 1) * sizeof(char));
+        menu->arr[i] = malloc((strlen(arr[i]) + 1) * sizeof(char));
         if (menu->arr[i] == NULL)
         {
             fprintf(stderr, "Memory allocation failed\n");
             exit(EXIT_FAILURE);
         }
 
-        strcpy(menu->arr[i], arr[i]);
+        // strcpy(menu->arr[i], arr[i]);
+        menu->arr[i] = arr[i];
     }
 
     menu->arr_size = arr_size;
@@ -73,7 +74,7 @@ menu_draw(Menu* menu)
 }
 
 void
-menu_update(Menu* menu, GameState *current_state)
+menu_update(Menu* menu)
 {
     if (IsKeyPressed(KEY_UP))
     {
@@ -106,12 +107,6 @@ menu_update(Menu* menu, GameState *current_state)
 void
 menu_free(Menu* menu)
 {
-    for (int i = 0; i < menu->arr_size; i++)
-    {
-        free(menu->arr[i]);
-        menu->arr[i] = NULL;
-    }
-
     free(menu->arr);
     menu->arr = NULL;
 }

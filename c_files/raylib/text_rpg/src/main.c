@@ -5,19 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void
-free_array(const char** arr, int arr_size)
-{
-    for (int i = 0; i < arr_size; i++)
-    {
-        free(arr[i]);
-        arr[i] = NULL;
-    }
-
-    free(arr);
-    arr = NULL;
-}
-
 int
 main(void)
 {
@@ -41,8 +28,7 @@ main(void)
               20,
               (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() });
 
-    const char** player_selection_menu_items =
-      ( const char** ) malloc(hero_types_size * sizeof(const char*));
+    const char** player_selection_menu_items = malloc(hero_types_size * sizeof(const char*));
     if (player_selection_menu_items == NULL)
     {
         fprintf(stderr, "Memory allocation failed\n");
@@ -51,15 +37,14 @@ main(void)
 
     for (int i = 0; i < hero_types_size; i++)
     {
-        player_selection_menu_items[i] =
-          ( const char* ) malloc((strlen(hero_types[i].type) + 1) * sizeof(char));
+        player_selection_menu_items[i] = malloc((strlen(hero_types[i].type) + 1) * sizeof(char));
         if (player_selection_menu_items[i] == NULL)
         {
             fprintf(stderr, "Memory allocation failed\n");
             exit(EXIT_FAILURE);
         }
 
-        strcpy(player_selection_menu_items[i], hero_types[i].type);
+        player_selection_menu_items[i] = hero_types[i].type;
     }
 
     menu_init(&player_selection_menu,
@@ -103,7 +88,8 @@ main(void)
         EndDrawing();
     }
 
-    free_array(player_selection_menu_items, hero_types_size);
+    // free_array(temp_items, hero_types_size);
+    free(player_selection_menu_items);
 
     menu_free(&main_menu);
     menu_free(&player_selection_menu);
