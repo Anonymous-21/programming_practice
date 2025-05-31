@@ -5,57 +5,71 @@
 
 void
 menu_init(Menu* menu,
-		  const char* item_arr[],
-		  int item_size,
+		  const char* arr[],
+		  int arr_size,
 		  int font_size,
+		  int line_gap,
+		  int margin,
 		  Rectangle layout_rect)
 {
+	menu->arr_size = arr_size;
 	menu->selected = 0;
-	menu->vertical_gap = 50;
+	menu->first_visible_element = 0;
+	menu->font_size = font_size;
+	menu->line_gap = line_gap;
+	menu->line_height = font_size + line_gap;
+	menu->margin = margin;
 	menu->layout_rect = layout_rect;
-	menu->item_size = item_size;
+	menu->max_visible_elements =
+	  (layout_rect.height - line_gap - margin * 2) / menu->line_height;
+	menu->visible_text_height =
+	  (font_size * arr_size) + (line_gap * (arr_size - 1));
 
-	menu->items = malloc(item_size * sizeof(MenuItem));
+	menu->items = malloc(arr_size * sizeof(MenuItem));
 	if (menu->items == NULL) {
 		fprintf(stderr, "Memory not allocated to menu->items\n");
 		exit(EXIT_FAILURE);
 	}
 
-	for (int i = 0; i < item_size; i++) {
-		menu->items[i].title = item_arr[i];
-		menu->items[i].font_size = font_size;
-		menu->items[i].width = MeasureText(item_arr[i], font_size);
+	for (int i = 0; i < arr_size; i++) {
+		menu->items[i].title = arr[i];
+		menu->items[i].width = MeasureText(arr[i], font_size);
 		menu->items[i].x = (int)layout_rect.x + (int)layout_rect.width / 2 -
 						   menu->items[i].width / 2;
-		menu->items[i].y = (int)layout_rect.y + (int)layout_rect.height / 2 -
-						   font_size / 2 + (i * menu->vertical_gap) -
-						   menu->vertical_gap / 2;
 	}
 }
 
 void
 menu_draw(Menu* menu)
 {
-	for (int i = 0; i < menu->item_size; i++) {
+	int last_visible_element =
+	  menu->first_visible_element + menu->max_visible_elements - 1;
+
+	for (int i = menu->first_visible_element;
+		 i < menu->arr_size && i < last_visible_element;
+		 i++) {
+		menu->items[i].y =
+		  (int)menu->layout_rect.y + (int)menu->layout_rect.height / 2 -
+		  menu->visible_text_height / 2 +
+		  (i - menu->first_visible_element) * menu->line_height;
+
 		// draw items
 		Color color = (i == menu->selected) ? BLACK : GRAY;
 
 		DrawText(menu->items[i].title,
 				 menu->items[i].x,
 				 menu->items[i].y,
-				 menu->items[i].font_size,
+				 menu->font_size,
 				 color);
 
 		// draw selection arrow
 		if (i == menu->selected) {
 			int arrow_margin = 30;
-			int arrow_font_size = 40;
-			Color arrow_color = BLACK;
 			DrawText(">",
 					 menu->items[i].x - arrow_margin,
 					 menu->items[i].y,
-					 arrow_font_size,
-					 arrow_color);
+					 menu->font_size,
+					 color);
 		}
 	}
 }
@@ -64,11 +78,25 @@ void
 menu_update(Menu* menu)
 {
 	if (IsKeyPressed(KEY_UP)) {
-		menu->selected =
-		  (menu->selected - 1 + menu->item_size) % menu->item_size;
+		menu->selected--;
+		if (menu->selected <= 0) {
+			menu->selected = 0;
+		}
+
+		if (menu->selected < menu->first_visible_element) {
+			menu->first_visible_element = menu->selected;
+		}
 	}
 	if (IsKeyPressed(KEY_DOWN)) {
-		menu->selected = (menu->selected + 1) % menu->item_size;
+		menu->selected++;
+		if (menu->selected > menu->arr_size - 1) {
+			menu->selected = menu->arr_size - 1;
+		}
+
+		if (menu->selected >
+			menu->first_visible_element + menu->max_visible_elements - 1) {
+			menu->first_visible_element++;
+		}
 	}
 }
 

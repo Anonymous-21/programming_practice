@@ -6,7 +6,6 @@
 typedef struct MenuItem
 {
 	const char* title;
-	int font_size;
 	int width;
 	int x;
 	int y;
@@ -16,15 +15,27 @@ typedef struct MenuItem
 typedef struct Menu
 {
 	MenuItem* items;
-    int item_size;
+	int arr_size;
+	int font_size;
+	int line_gap;
+	int line_height;
+	int margin;
 	int selected;
-	int vertical_gap;
-    Rectangle layout_rect;
+	int first_visible_element;
+	int max_visible_elements;
+	int visible_text_height;
+	Rectangle layout_rect;
 
 } Menu;
 
 void
-menu_init(Menu* menu, const char* item_arr[], int item_size, int font_size, Rectangle layout_rect);
+menu_init(Menu* menu,
+		  const char* arr[],
+		  int arr_size,
+		  int font_size,
+		  int line_gap,
+		  int margin,
+		  Rectangle layout_rect);
 void
 menu_draw(Menu* menu);
 void

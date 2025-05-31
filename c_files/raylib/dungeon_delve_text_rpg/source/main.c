@@ -1,5 +1,5 @@
-#include "../include/menu.h"
 #include "../include/game_data.h"
+#include "../include/menu.h"
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,23 +22,26 @@ main(void)
 	Rectangle layout_rect_main_menu =
 	  (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() };
 	Rectangle layout_rect_player_selection_menu =
-	  (Rectangle){ 0, 0, GetScreenWidth() / 2, GetScreenHeight()/2 - 100 };
+	  (Rectangle){ 0, 0, GetScreenWidth() / 2, GetScreenHeight() / 2 - 100 };
 
-    const char* player_selection_menu_items[hero_array_size];
-    for (int i = 0; i < hero_array_size; i++)
-    {
-        player_selection_menu_items[i] = hero_array[i].type;
-    }
+	const char* player_selection_menu_items[hero_array_size];
+	for (int i = 0; i < hero_array_size; i++) {
+		player_selection_menu_items[i] = hero_array[i].type;
+	}
 
 	menu_init(&main_menu,
 			  main_menu_items,
 			  main_menu_item_size,
 			  40,
+			  5,
+			  20,
 			  layout_rect_main_menu);
 	menu_init(&player_selection_menu,
 			  player_selection_menu_items,
 			  hero_array_size,
 			  40,
+			  5,
+			  20,
 			  layout_rect_player_selection_menu);
 
 	while (!WindowShouldClose()) {
