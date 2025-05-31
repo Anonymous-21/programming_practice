@@ -3,50 +3,49 @@
 
 typedef enum GameState
 {
-	STATE_MAIN_MENU,
-	STATE_PLAYER_SELECTION,
-	STATE_TOWN,
-	STATE_QUIT
+    STATE_MAIN_MENU,
+    STATE_PLAYER_SELECTION,
+    STATE_TOWN,
+    STATE_QUIT
 
 } GameState;
 
-// main menu items
-extern const char* main_menu_array[];
-extern const int main_menu_array_size;
+// main menu data
+extern const char* main_menu_items[];
+extern const int main_menu_items_size;
 
-// hero data
+// player data
 typedef struct BaseHero
 {
-	const char* type;
-	const float health;
-	const float damage;
-	const float defense;
-	const float health_growth;
-	const float damage_growth;
-	const float defense_growth;
+    const char* type;
+    const char* roles;
+    const float health;
+    const float damage;
+    const float defense;
+    const float health_growth;
+    const float damage_growth;
+    const float defense_growth;
+    const char* notes;
 
 } BaseHero;
 
-extern const BaseHero hero_array[];
-extern const int hero_array_size;
-
-const char**
-initialize_player_selection_menu();
+const BaseHero hero_types[];
+extern const int hero_types_size;
 
 // enemy data
 typedef struct BaseEnemy
 {
-	const char* type;
-	const float health;
-	const float damage;
-	const float defense;
-	const float health_growth;
-	const float damage_growth;
-	const float defense_growth;
+    const char* type;
+    const float health;
+    const float damage;
+    const float defense;
+    const float health_growth;
+    const float damage_growth;
+    const float defense_growth;
 
 } BaseEnemy;
 
-extern const BaseEnemy enemy_array[];
-extern const int enemy_array_size;
+const BaseEnemy enemy_types[];
+extern const int enemy_types_size;
 
-#endif // GAME_DATA_H;
+#endif // GAME_DATA_H
