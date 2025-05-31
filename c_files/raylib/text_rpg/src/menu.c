@@ -2,7 +2,6 @@
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 void
 menu_init(Menu* menu,
@@ -22,14 +21,6 @@ menu_init(Menu* menu,
 
     for (int i = 0; i < arr_size; i++)
     {
-        menu->arr[i] = malloc((strlen(arr[i]) + 1) * sizeof(char));
-        if (menu->arr[i] == NULL)
-        {
-            fprintf(stderr, "Memory allocation failed\n");
-            exit(EXIT_FAILURE);
-        }
-
-        // strcpy(menu->arr[i], arr[i]);
         menu->arr[i] = arr[i];
     }
 
