@@ -12,7 +12,7 @@ main(void)
     const int SCREEN_WIDTH = 1000;
     const int SCREEN_HEIGHT = 800;
     const char SCREEN_TITLE[] = "Text Rpg";
-    const Color SCREEN_BACKGROUND = RAYWHITE;
+    const Color SCREEN_BACKGROUND = LIGHTGRAY;
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
 
@@ -230,6 +230,7 @@ main(void)
     menu_free(&player_selection_menu);
     menu_free(&town_menu);
     menu_free(&map_menu);
+    menu_free(&shop_menu);
 
     CloseWindow();
 

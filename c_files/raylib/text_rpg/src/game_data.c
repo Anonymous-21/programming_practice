@@ -1,66 +1,65 @@
 #include "../inc/game_data.h"
 
 // main menu data
-const char* main_menu_items[] = { "NEW GAME", "CONTINUE", "QUIT" };
+const char* const main_menu_items[] = { "NEW GAME", "CONTINUE", "QUIT" };
 const int main_menu_items_size = sizeof(main_menu_items) / sizeof(main_menu_items[0]);
 
 // town menu data
-const char* town_menu_items[] = { "MAP", "QUEST", "SHOP" };
+const char* const town_menu_items[] = { "MAP", "QUEST", "SHOP" };
 const int town_menu_items_size = sizeof(town_menu_items) / sizeof(town_menu_items[0]);
 
-// map menu data
-const char* map_menu_items[] = {"SETTLEMENTS", "WILDERNESS", "DUNGEONS", "MYSTICAL", "CONFLICT ZONES"};
-const int map_menu_items_size = sizeof(map_menu_items) / sizeof(map_menu_items[0]);
-
 // ship menu data
-const char* shop_menu_items[] = {"CONSUMABLES", "WEAPONS", "ARMORS", "ACCESSORIES"};
+const char* const shop_menu_items[] = { "CONSUMABLES", "WEAPONS", "ARMORS", "ACCESSORIES" };
 const int shop_menu_items_size = sizeof(shop_menu_items) / sizeof(shop_menu_items[0]);
 
-// Settlements
-const char *settlements[] = {
-    "Windmere Village",
-    "Ironhold",
-    "Thornbridge",
-    "Duskwatch",
-    "Serpents Rest"
-};
+// quests menu data
+char* quest_menu_items[] = { 0 };
+int quest_menu_items_size = sizeof(quest_menu_items) / sizeof(quest_menu_items[0]);
 
-// Wilderness & Natural Locations
-const char *wilderness[] = {
-    "The Whispering Woods",
-    "Frostveil Glacier",
-    "The Scorched Expanse",
-    "Starfall Crater",
-    "Moonlit Grove"
-};
+// map menu data
+const char* const map_menu_items[] = { "Settlements",
+                                       "Wilderness",
+                                       "Dungeons",
+                                       "Mystical",
+                                       "Conflict Zones" };
+const int map_menu_items_size = sizeof(map_menu_items) / sizeof(map_menu_items[0]);
 
-// Dungeons & Ruins
-const char *dungeons[] = {
-    "The Hollow Keep",
-    "Caverns of the Wyrm",
-    "Sunken Sanctum",
-    "Obsidian Spire",
-    "Vault of Forgotten Kings"
-};
+const char* const zone_settlement_items[] = { "Windmere Village",
+                                              "Ironhold",
+                                              "Thornbridge",
+                                              "Duskwatch",
+                                              "Serpents Rest" };
+const int zone_settlement_items_size =
+  sizeof(zone_settlement_items) / sizeof(zone_settlement_items[0]);
 
-// Mystical & Unique Places
-const char *mystical[] = {
-    "The Shattered Isles",
-    "The Arcane Nexus",
-    "Mirrorlake",
-    "Chronos Ruins",
-    "The Labyrinth of Echoes"
-};
+const char* const zone_wilderness_items[] = { "The Whispering Woods",
+                                              "Frostveil Glacier",
+                                              "The Scorched Expanse",
+                                              "Starfall Crater",
+                                              "Moonlit Grove" };
+const int zone_wilderness_items_size =
+  sizeof(zone_wilderness_items) / sizeof(zone_wilderness_items[0]);
 
-// Conflict Zones
-const char *conflict_zones[] = {
-    "Redridge Battlefield",
-    "The Crimson Marsh",
-    "Grave of Giants",
-    "Broken Banner Fort",
-    "Ashen Fields"
-};
+const char* const zone_dungeon_items[] = { "The Hollow Keep",
+                                           "Caverns of the Wyrm",
+                                           "Sunken Sanctum",
+                                           "Obsidian Spire",
+                                           "Vault of Forgotten Kings" };
+const int zone_dungeon_items_size = sizeof(zone_dungeon_items) / sizeof(zone_dungeon_items[0]);
 
+const char* const zone_mystical_items[] = { "The Shattered Isles",
+                                            "The Arcane Nexus",
+                                            "Mirrorlake",
+                                            "Chronos Ruins",
+                                            "The Labyrinth of Echoes" };
+const int zone_mystical_items_size = sizeof(zone_mystical_items) / sizeof(zone_mystical_items[0]);
+
+const char* const zone_conflict_items[] = { "Redridge Battlefield",
+                                            "The Crimson Marsh",
+                                            "Grave of Giants",
+                                            "Broken Banner Fort",
+                                            "Ashen Fields" };
+const int zone_conflict_items_size = sizeof(zone_conflict_items) / sizeof(zone_conflict_items[0]);
 
 // hero data
 const BaseHero hero_types[] = {

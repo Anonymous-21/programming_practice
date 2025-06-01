@@ -21,7 +21,7 @@ typedef struct Menu
 void
 menu_init(Menu* menu,
           const char** arr,
-          int arr_size,
+          const int arr_size,
           int font_size,
           int text_gap,
           Rectangle layout_rect);

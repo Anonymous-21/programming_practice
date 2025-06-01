@@ -2,22 +2,22 @@
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void
 menu_init(Menu* menu,
           const char** arr,
-          int arr_size,
+          const int arr_size,
           int font_size,
           int text_gap,
           Rectangle layout_rect)
 {
-    menu->arr = malloc(arr_size * sizeof( const char*));
+    menu->arr = malloc(arr_size * sizeof(const char*));
     if (menu->arr == NULL)
     {
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
-
     for (int i = 0; i < arr_size; i++)
     {
         menu->arr[i] = arr[i];
