@@ -12,6 +12,10 @@ const int town_menu_items_size = sizeof(town_menu_items) / sizeof(town_menu_item
 const char* map_menu_items[] = {"SETTLEMENTS", "WILDERNESS", "DUNGEONS", "MYSTICAL", "CONFLICT ZONES"};
 const int map_menu_items_size = sizeof(map_menu_items) / sizeof(map_menu_items[0]);
 
+// ship menu data
+const char* shop_menu_items[] = {"CONSUMABLES", "WEAPONS", "ARMORS", "ACCESSORIES"};
+const int shop_menu_items_size = sizeof(shop_menu_items) / sizeof(shop_menu_items[0]);
+
 // Settlements
 const char *settlements[] = {
     "Windmere Village",

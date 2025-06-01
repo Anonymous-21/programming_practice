@@ -20,12 +20,15 @@ main(void)
     int menu_margin = 40; // 20 up and 20 down
     bool player_selected = false;
 
+    ShopType current_shop_type = SHOP_INVALID;
+    MapZone current_map_zone = SHOP_INVALID;
+
     Menu main_menu;
     Menu player_selection_menu;
     Menu town_menu;
     Menu map_menu;
     // Menu quest_menu;
-    // Menu shop_menu;
+    Menu shop_menu;
 
     Player player;
 
@@ -69,11 +72,26 @@ main(void)
               20,
               (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_margin });
 
+    menu_init(&shop_menu,
+              shop_menu_items,
+              shop_menu_items_size,
+              30,
+              20,
+              (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_margin });
+
     while (current_state != STATE_QUIT)
     {
-        if (IsKeyPressed(KEY_ESCAPE) && player_selected && current_state == STATE_TOWN)
+        if (IsKeyPressed(KEY_ESCAPE) && player_selected)
         {
-            current_state = STATE_MAIN_MENU;
+            current_state--;
+            if (current_state == 1)
+            {
+                current_state = 0;
+            }
+            if (current_state > 2 && current_state != STATE_QUIT)
+            {
+                current_state = 2;
+            }
         }
 
         BeginDrawing();
@@ -155,19 +173,19 @@ main(void)
                     switch (map_menu.selected)
                     {
                         case 0:
-                            current_state = STATE_SETTLEMENTS;
+                            current_map_zone = MAP_ZONE_SETTLEMENTS;
                             break;
                         case 1:
-                            current_state = STATE_WILDERNESS;
+                            current_map_zone = MAP_ZONE_WILDERNESS;
                             break;
                         case 2:
-                            current_state = STATE_DUNGEONS;
+                            current_map_zone = MAP_ZONE_DUNGEONS;
                             break;
                         case 3:
-                            current_state = STATE_MYSTICAL;
+                            current_map_zone = MAP_ZONE_MYSTICAL;
                             break;
                         case 4:
-                            current_state = STATE_CONFLICT_ZONES;
+                            current_map_zone = MAP_ZONE_CONFLICT;
                             break;
                     }
                 }
@@ -175,16 +193,27 @@ main(void)
             case STATE_QUEST:
                 break;
             case STATE_SHOP:
-                break;
-            case STATE_SETTLEMENTS:
-                break;
-            case STATE_WILDERNESS:
-                break;
-            case STATE_DUNGEONS:
-                break;
-            case STATE_MYSTICAL:
-                break;
-            case STATE_CONFLICT_ZONES:
+                menu_draw(&shop_menu);
+                menu_update(&shop_menu);
+                if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
+                    current_state == STATE_SHOP)
+                {
+                    switch (shop_menu.selected)
+                    {
+                        case 0:
+                            current_shop_type = SHOP_TYPE_CONSUMABLES;
+                            break;
+                        case 1:
+                            current_shop_type = SHOP_TYPE_WEAPONS;
+                            break;
+                        case 2:
+                            current_shop_type = SHOP_TYPE_ARMORS;
+                            break;
+                        case 3:
+                            current_shop_type = SHOP_TYPE_ACCESSORIES;
+                            break;
+                    }
+                }
                 break;
 
             case STATE_QUIT:
