@@ -6,6 +6,14 @@ typedef enum GameState
     STATE_MAIN_MENU,
     STATE_PLAYER_SELECTION,
     STATE_TOWN,
+    STATE_MAP,
+    STATE_QUEST,
+    STATE_SHOP,
+    STATE_SETTLEMENTS, 
+    STATE_WILDERNESS, 
+    STATE_DUNGEONS, 
+    STATE_MYSTICAL, 
+    STATE_CONFLICT_ZONES,
     STATE_QUIT
 
 } GameState;
@@ -13,6 +21,14 @@ typedef enum GameState
 // main menu data
 extern const char* main_menu_items[];
 extern const int main_menu_items_size;
+
+// town menu data
+extern const char* town_menu_items[];
+extern const int town_menu_items_size;
+
+// map menu data
+extern const char* map_menu_items[];
+extern const int map_menu_items_size;
 
 // player data
 typedef struct BaseHero

@@ -9,8 +9,8 @@
 int
 main(void)
 {
-    const int SCREEN_WIDTH = 800;
-    const int SCREEN_HEIGHT = 600;
+    const int SCREEN_WIDTH = 1000;
+    const int SCREEN_HEIGHT = 800;
     const char SCREEN_TITLE[] = "Text Rpg";
     const Color SCREEN_BACKGROUND = RAYWHITE;
 
@@ -18,9 +18,14 @@ main(void)
 
     GameState current_state = STATE_MAIN_MENU;
     int menu_margin = 40; // 20 up and 20 down
+    bool player_selected = false;
 
     Menu main_menu;
     Menu player_selection_menu;
+    Menu town_menu;
+    Menu map_menu;
+    // Menu quest_menu;
+    // Menu shop_menu;
 
     Player player;
 
@@ -28,7 +33,7 @@ main(void)
               main_menu_items,
               main_menu_items_size,
               40,
-              5,
+              10,
               (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_margin });
 
     const char** player_selection_menu_items = malloc(hero_types_size * sizeof(const char*));
@@ -46,47 +51,144 @@ main(void)
     menu_init(&player_selection_menu,
               player_selection_menu_items,
               hero_types_size,
-              40,
-              5,
+              30,
+              20,
               (Rectangle){ 0, 0, GetScreenWidth() / 2, GetScreenHeight() - menu_margin });
 
-    while (!WindowShouldClose())
+    menu_init(&town_menu,
+              town_menu_items,
+              town_menu_items_size,
+              30,
+              20,
+              (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_margin });
+
+    menu_init(&map_menu,
+              map_menu_items,
+              map_menu_items_size,
+              30,
+              20,
+              (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_margin });
+
+    while (current_state != STATE_QUIT)
     {
+        if (IsKeyPressed(KEY_ESCAPE) && player_selected && current_state == STATE_TOWN)
+        {
+            current_state = STATE_MAIN_MENU;
+        }
+
         BeginDrawing();
         ClearBackground(SCREEN_BACKGROUND);
 
-        if (current_state == STATE_MAIN_MENU)
+        switch (current_state)
         {
-            menu_draw(&main_menu);
-            menu_update(&main_menu);
-            if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
-                current_state == STATE_MAIN_MENU)
-            {
-                if (main_menu.selected == 0)
+            case STATE_MAIN_MENU:
+
+                menu_draw(&main_menu);
+                menu_update(&main_menu);
+                if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
+                    current_state == STATE_MAIN_MENU)
                 {
-                    current_state = STATE_PLAYER_SELECTION;
+                    switch (main_menu.selected)
+                    {
+                        case 0:
+                            current_state = STATE_PLAYER_SELECTION;
+                            break;
+
+                        case 1:
+                            if (player_selected)
+                            {
+                                current_state = STATE_TOWN;
+                            }
+                            break;
+
+                        case 2:
+                            current_state = STATE_QUIT;
+                            break;
+                    }
                 }
-                else if (main_menu.selected == 1)
+                break;
+
+            case STATE_PLAYER_SELECTION:
+
+                menu_draw(&player_selection_menu);
+                menu_update(&player_selection_menu);
+                draw_player_selection_details(player_selection_menu.selected);
+
+                if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
+                    current_state == STATE_PLAYER_SELECTION)
                 {
-                    current_state = STATE_QUIT;
+                    player_init(&player, player_selection_menu.selected);
+                    player_selected = true;
+                    current_state = STATE_TOWN;
                 }
-            }
-        }
-        else if (current_state == STATE_PLAYER_SELECTION)
-        {
-            menu_draw(&player_selection_menu);
-            menu_update(&player_selection_menu);
-            draw_player_selection_details(player_selection_menu.selected);
-            if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
-                current_state == STATE_PLAYER_SELECTION)
-            {
-                player_init(&player, player_selection_menu.selected);
-                current_state = STATE_TOWN;
-            }
-        }
-        else if (current_state == STATE_QUIT)
-        {
-            break;
+                break;
+
+            case STATE_TOWN:
+
+                menu_draw(&town_menu);
+                menu_update(&town_menu);
+                if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
+                    current_state == STATE_TOWN)
+                {
+                    switch (town_menu.selected)
+                    {
+                        case 0:
+                            current_state = STATE_MAP;
+                            break;
+                        case 1:
+                            current_state = STATE_QUEST;
+                            break;
+                        case 2:
+                            current_state = STATE_SHOP;
+                            break;
+                    }
+                }
+                break;
+
+            case STATE_MAP:
+
+                menu_draw(&map_menu);
+                menu_update(&map_menu);
+                if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
+                    current_state == STATE_MAP)
+                {
+                    switch (map_menu.selected)
+                    {
+                        case 0:
+                            current_state = STATE_SETTLEMENTS;
+                            break;
+                        case 1:
+                            current_state = STATE_WILDERNESS;
+                            break;
+                        case 2:
+                            current_state = STATE_DUNGEONS;
+                            break;
+                        case 3:
+                            current_state = STATE_MYSTICAL;
+                            break;
+                        case 4:
+                            current_state = STATE_CONFLICT_ZONES;
+                            break;
+                    }
+                }
+                break;
+            case STATE_QUEST:
+                break;
+            case STATE_SHOP:
+                break;
+            case STATE_SETTLEMENTS:
+                break;
+            case STATE_WILDERNESS:
+                break;
+            case STATE_DUNGEONS:
+                break;
+            case STATE_MYSTICAL:
+                break;
+            case STATE_CONFLICT_ZONES:
+                break;
+
+            case STATE_QUIT:
+                break;
         }
 
         EndDrawing();
@@ -97,6 +199,8 @@ main(void)
 
     menu_free(&main_menu);
     menu_free(&player_selection_menu);
+    menu_free(&town_menu);
+    menu_free(&map_menu);
 
     CloseWindow();
 

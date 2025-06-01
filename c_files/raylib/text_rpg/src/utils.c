@@ -12,17 +12,18 @@ center_and_draw_text(const char* text, int font_size, Rectangle layout_rect, Col
 
 void
 center_and_draw_text_array(const char** text_array,
+                           const int text_array_size,
                            int font_size,
                            int text_gap,
                            Rectangle layout_rect,
                            Color color)
 
 {
-    const int arr_size = sizeof(text_array)/sizeof(text_array[0]);
     int text_height = font_size + text_gap;
-    int max_visible_elements_height = (font_size * arr_size) + (text_gap * (arr_size - 1));
+    int max_visible_elements_height =
+      (font_size * text_array_size) + (text_gap * (text_array_size - 1));
 
-    for (int i = 0; i < arr_size; i++)
+    for (int i = 0; i < text_array_size; i++)
     {
         int text_width = MeasureText(text_array[i], font_size);
         int text_x = ( int ) (layout_rect.x + layout_rect.width / 2 - text_width / 2);

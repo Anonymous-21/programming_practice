@@ -1,8 +1,62 @@
 #include "../inc/game_data.h"
 
 // main menu data
-const char* main_menu_items[] = { "NEW GAME", "QUIT" };
+const char* main_menu_items[] = { "NEW GAME", "CONTINUE", "QUIT" };
 const int main_menu_items_size = sizeof(main_menu_items) / sizeof(main_menu_items[0]);
+
+// town menu data
+const char* town_menu_items[] = { "MAP", "QUEST", "SHOP" };
+const int town_menu_items_size = sizeof(town_menu_items) / sizeof(town_menu_items[0]);
+
+// map menu data
+const char* map_menu_items[] = {"SETTLEMENTS", "WILDERNESS", "DUNGEONS", "MYSTICAL", "CONFLICT ZONES"};
+const int map_menu_items_size = sizeof(map_menu_items) / sizeof(map_menu_items[0]);
+
+// Settlements
+const char *settlements[] = {
+    "Windmere Village",
+    "Ironhold",
+    "Thornbridge",
+    "Duskwatch",
+    "Serpents Rest"
+};
+
+// Wilderness & Natural Locations
+const char *wilderness[] = {
+    "The Whispering Woods",
+    "Frostveil Glacier",
+    "The Scorched Expanse",
+    "Starfall Crater",
+    "Moonlit Grove"
+};
+
+// Dungeons & Ruins
+const char *dungeons[] = {
+    "The Hollow Keep",
+    "Caverns of the Wyrm",
+    "Sunken Sanctum",
+    "Obsidian Spire",
+    "Vault of Forgotten Kings"
+};
+
+// Mystical & Unique Places
+const char *mystical[] = {
+    "The Shattered Isles",
+    "The Arcane Nexus",
+    "Mirrorlake",
+    "Chronos Ruins",
+    "The Labyrinth of Echoes"
+};
+
+// Conflict Zones
+const char *conflict_zones[] = {
+    "Redridge Battlefield",
+    "The Crimson Marsh",
+    "Grave of Giants",
+    "Broken Banner Fort",
+    "Ashen Fields"
+};
+
 
 // hero data
 const BaseHero hero_types[] = {
