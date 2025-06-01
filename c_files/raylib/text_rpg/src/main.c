@@ -1,5 +1,7 @@
 #include "../inc/game_data.h"
 #include "../inc/menu.h"
+#include "../inc/player-selection_details.h"
+#include "../inc/player.h"
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,6 +21,8 @@ main(void)
 
     Menu main_menu;
     Menu player_selection_menu;
+
+    Player player;
 
     menu_init(&main_menu,
               main_menu_items,
@@ -44,7 +48,7 @@ main(void)
               hero_types_size,
               40,
               5,
-              (Rectangle){ 0, 0, GetScreenWidth() / 2, GetScreenHeight() - menu_margin});
+              (Rectangle){ 0, 0, GetScreenWidth() / 2, GetScreenHeight() - menu_margin });
 
     while (!WindowShouldClose())
     {
@@ -72,9 +76,11 @@ main(void)
         {
             menu_draw(&player_selection_menu);
             menu_update(&player_selection_menu);
+            draw_player_selection_details(player_selection_menu.selected);
             if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
                 current_state == STATE_PLAYER_SELECTION)
             {
+                player_init(&player, player_selection_menu.selected);
                 current_state = STATE_TOWN;
             }
         }

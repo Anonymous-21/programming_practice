@@ -12,13 +12,13 @@ center_and_draw_text(const char* text, int font_size, Rectangle layout_rect, Col
 
 void
 center_and_draw_text_array(const char** text_array,
-                           const int arr_size,
                            int font_size,
                            int text_gap,
                            Rectangle layout_rect,
                            Color color)
 
 {
+    const int arr_size = sizeof(text_array)/sizeof(text_array[0]);
     int text_height = font_size + text_gap;
     int max_visible_elements_height = (font_size * arr_size) + (text_gap * (arr_size - 1));
 
