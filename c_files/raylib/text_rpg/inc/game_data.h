@@ -1,19 +1,6 @@
 #ifndef GAME_DATA_H
 #define GAME_DATA_H
 
-typedef enum GameState
-{
-    STATE_MAIN_MENU = 0,
-    STATE_PLAYER_SELECTION = 1,
-    STATE_TOWN = 2,
-    STATE_MAP = 3,
-    STATE_QUEST = 4,
-    STATE_SHOP = 5,
-
-    STATE_QUIT = 6
-
-} GameState;
-
 typedef enum ShopType
 {
     SHOP_TYPE_CONSUMABLES = 0,
@@ -36,10 +23,6 @@ typedef enum MapZone
     MAP_ZONE_INVALIED = -1,
 
 } MapZone;
-
-// main menu data
-extern const char* const main_menu_items[];
-extern const int main_menu_items_size;
 
 // town menu data
 extern const char* const town_menu_items[];
@@ -71,24 +54,6 @@ extern const int shop_menu_items_size;
 // quests menu data
 extern char* quest_menu_items[];
 extern int quest_menu_items_size;
-
-// player data
-typedef struct BaseHero
-{
-    const char* const type;
-    const char* const roles;
-    const float health;
-    const float damage;
-    const float defense;
-    const float health_growth;
-    const float damage_growth;
-    const float defense_growth;
-    const char* const notes;
-
-} BaseHero;
-
-extern const BaseHero hero_types[];
-extern const int hero_types_size;
 
 // enemy data
 typedef struct BaseEnemy

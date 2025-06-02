@@ -5,7 +5,7 @@
 
 typedef struct Menu
 {
-    const char** arr;
+    char** arr;
     int arr_size;
     int selected;
     int first_visible_element;
@@ -15,12 +15,13 @@ typedef struct Menu
     int text_gap;
     int text_height;
     Rectangle layout_rect;
+    Color color;
 
 } Menu;
 
 void
 menu_init(Menu* menu,
-          const char** arr,
+          const char* const* arr,
           const int arr_size,
           int font_size,
           int text_gap,

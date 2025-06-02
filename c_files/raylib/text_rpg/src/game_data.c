@@ -1,9 +1,5 @@
 #include "../inc/game_data.h"
 
-// main menu data
-const char* const main_menu_items[] = { "NEW GAME", "CONTINUE", "QUIT" };
-const int main_menu_items_size = sizeof(main_menu_items) / sizeof(main_menu_items[0]);
-
 // town menu data
 const char* const town_menu_items[] = { "MAP", "QUEST", "SHOP" };
 const int town_menu_items_size = sizeof(town_menu_items) / sizeof(town_menu_items[0]);
@@ -60,93 +56,6 @@ const char* const zone_conflict_items[] = { "Redridge Battlefield",
                                             "Broken Banner Fort",
                                             "Ashen Fields" };
 const int zone_conflict_items_size = sizeof(zone_conflict_items) / sizeof(zone_conflict_items[0]);
-
-// hero data
-const BaseHero hero_types[] = {
-    { "Warrior", "Tank / Melee", 90, 8, 1.12f, 1.06f, 8, 1.08f, "Strong against Goblins, Bandits" },
-    { "Ranger",
-      "Ranged DPS",
-      60,
-      11,
-      1.08f,
-      1.12f,
-      4,
-      1.06f,
-      "Effective vs Flying (Dragon) and Witch" },
-    { "Mage",
-      "AOE Spellcaster",
-      50,
-      14,
-      1.05f,
-      1.15f,
-      3,
-      1.04f,
-      "Counters large mobs (Zombies, Skeletons)" },
-    { "Cleric",
-      "Healer / Support",
-      65,
-      6,
-      1.10f,
-      1.04f,
-      6,
-      1.07f,
-      "Protects party, heals against Demon/Vampire damage" },
-    { "Rogue",
-      "Burst DPS / Stealth",
-      55,
-      13,
-      1.07f,
-      1.14f,
-      3,
-      1.05f,
-      "Strong vs Witch, Bandit, soft targets" },
-    { "Paladin",
-      "Off-tank / Support",
-      80,
-      9,
-      1.11f,
-      1.08f,
-      7,
-      1.09f,
-      "Balanced, with resistance to undead" },
-    { "Berserker",
-      "High-risk Melee DPS",
-      70,
-      12,
-      1.10f,
-      1.13f,
-      5,
-      1.06f,
-      "Excels vs Trolls, Werewolves" },
-    { "Necromancer",
-      "Summoner / Debuff",
-      50,
-      10,
-      1.06f,
-      1.10f,
-      3,
-      1.04f,
-      "Counters undead enemies, raises minions" },
-    { "Druid",
-      "Hybrid / Nature",
-      65,
-      9,
-      1.10f,
-      1.09f,
-      5,
-      1.07f,
-      "Control spells, good against Dragons and Trolls" },
-    { "Monk",
-      "Agile Melee / Buffer",
-      60,
-      10,
-      1.09f,
-      1.10f,
-      5,
-      1.08f,
-      "Counters Demons and Vampires, buffs allies" }
-};
-const int hero_types_size = sizeof(hero_types) / sizeof(hero_types[0]);
 
 // enemy data
 const BaseEnemy enemy_types[] = {

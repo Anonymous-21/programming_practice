@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include "../inc/menu.h"
 #include <raylib.h>
 #include <stdio.h>
@@ -6,7 +8,7 @@
 
 void
 menu_init(Menu* menu,
-          const char** arr,
+          const char* const* arr,
           const int arr_size,
           int font_size,
           int text_gap,
@@ -20,7 +22,12 @@ menu_init(Menu* menu,
     }
     for (int i = 0; i < arr_size; i++)
     {
-        menu->arr[i] = arr[i];
+        menu->arr[i] = strndup(arr[i], strlen(arr[i]) + 1);
+        if (menu->arr[i] == NULL)
+        {
+            fprintf(stderr, "Memory allocation failed\n");
+            exit(EXIT_FAILURE);
+        }
     }
 
     menu->arr_size = arr_size;
@@ -49,15 +56,15 @@ menu_draw(Menu* menu)
                      menu->max_visible_text_height / 2 +
                      (i - menu->first_visible_element) * menu->text_height;
 
-        Color color = (i == menu->selected) ? BLACK : GRAY;
+        menu->color = (i == menu->selected) ? BLACK : GRAY;
 
         // draw menu items
-        DrawText(menu->arr[i], text_x, text_y, menu->font_size, color);
+        DrawText(menu->arr[i], text_x, text_y, menu->font_size, menu->color);
 
         if (i == menu->selected)
         {
             // draw selection arrow
-            DrawText(">", text_x - 30, text_y, menu->font_size, color);
+            DrawText(">", text_x - 30, text_y, menu->font_size, menu->color);
         }
     }
 }
@@ -96,6 +103,12 @@ menu_update(Menu* menu)
 void
 menu_free(Menu* menu)
 {
+    for (int i = 0; i < menu->arr_size; i++)
+    {
+        free(menu->arr[i]);
+        menu->arr[i] = NULL;
+    }
+
     free(menu->arr);
     menu->arr = NULL;
 }

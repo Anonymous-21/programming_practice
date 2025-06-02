@@ -1,7 +1,10 @@
 #include "../inc/game_data.h"
+#include "../inc/main_menu.h"
 #include "../inc/menu.h"
-#include "../inc/player-selection_details.h"
 #include "../inc/player.h"
+#include "../inc/player_selection_menu.h"
+#include "../inc/game_states.h"
+#include "../inc/hero_types_database.h"
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,26 +21,21 @@ main(void)
 
     GameState current_state = STATE_MAIN_MENU;
     int menu_margin = 40; // 20 up and 20 down
+    int menu_vertical_padding = 40;
     bool player_selected = false;
 
-    ShopType current_shop_type = SHOP_INVALID;
-    MapZone current_map_zone = SHOP_INVALID;
-
-    Menu main_menu;
+    main_menu_init(menu_vertical_padding);
+    player_selection_init(menu_vertical_padding);
     Menu player_selection_menu;
     Menu town_menu;
     Menu map_menu;
     // Menu quest_menu;
     Menu shop_menu;
 
-    Player player;
+    // Player player;
 
-    menu_init(&main_menu,
-              main_menu_items,
-              main_menu_items_size,
-              40,
-              10,
-              (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_margin });
+    ShopType current_shop_type = SHOP_INVALID;
+    MapZone current_map_zone = SHOP_INVALID;
 
     const char** player_selection_menu_items = malloc(hero_types_size * sizeof(const char*));
     if (player_selection_menu_items == NULL)
@@ -100,45 +98,25 @@ main(void)
         switch (current_state)
         {
             case STATE_MAIN_MENU:
-
-                menu_draw(&main_menu);
-                menu_update(&main_menu);
-                if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
-                    current_state == STATE_MAIN_MENU)
-                {
-                    switch (main_menu.selected)
-                    {
-                        case 0:
-                            current_state = STATE_PLAYER_SELECTION;
-                            break;
-
-                        case 1:
-                            if (player_selected)
-                            {
-                                current_state = STATE_TOWN;
-                            }
-                            break;
-
-                        case 2:
-                            current_state = STATE_QUIT;
-                            break;
-                    }
-                }
+                main_menu_draw();
+                main_menu_update(&current_state, player_selected);
                 break;
 
             case STATE_PLAYER_SELECTION:
 
-                menu_draw(&player_selection_menu);
-                menu_update(&player_selection_menu);
-                draw_player_selection_details(player_selection_menu.selected);
+                // menu_draw(&player_selection_menu);
+                player_selection_draw();
+                Player player = player_selection_update(&current_state, &player_selected);
+                // menu_update(&player_selection_menu);
+                // draw_player_selection_details(player_selection_menu.selected);
 
-                if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
-                    current_state == STATE_PLAYER_SELECTION)
-                {
-                    player_init(&player, player_selection_menu.selected);
-                    player_selected = true;
-                    current_state = STATE_TOWN;
-                }
+                // if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
+                //     current_state == STATE_PLAYER_SELECTION)
+                // {
+                //     player_init(&player, player_selection_menu.selected);
+                //     player_selected = true;
+                //     current_state = STATE_TOWN;
+                // }
                 break;
 
             case STATE_TOWN:
@@ -226,7 +204,8 @@ main(void)
     free(player_selection_menu_items);
     player_selection_menu_items = NULL;
 
-    menu_free(&main_menu);
+    main_menu_free();
+    // menu_free(&main_menu);
     menu_free(&player_selection_menu);
     menu_free(&town_menu);
     menu_free(&map_menu);
