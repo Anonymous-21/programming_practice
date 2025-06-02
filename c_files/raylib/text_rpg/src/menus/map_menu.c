@@ -1,6 +1,6 @@
-#include "../inc/menus/map_menu.h"
-#include "../inc/game_states.h"
-#include "../inc/menus/menu.h"
+#include "../../include/menus/map_menu.h"
+#include "../../include/game_states.h"
+#include "../../include/menus/menu.h"
 #include <raylib.h>
 
 typedef enum MapMenuState

@@ -1,4 +1,4 @@
-#include "../inc/game_data.h"
+#include "../include/game_data.h"
 
 // quests menu data
 char* quest_menu_items[] = { 0 };

@@ -1,4 +1,4 @@
-#include "../inc/utils.h"
+#include "../include/utils.h"
 
 void
 center_and_draw_text(const char* text, int font_size, Rectangle layout_rect, Color color)

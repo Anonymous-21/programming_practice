@@ -1,6 +1,6 @@
-#include "../inc/menus/shop_menu.h"
-#include "../inc/game_states.h"
-#include "../inc/menus/menu.h"
+#include "../../include/menus/shop_menu.h"
+#include "../../include/game_states.h"
+#include "../../include/menus/menu.h"
 #include <raylib.h>
 
 typedef enum ShopMenuState

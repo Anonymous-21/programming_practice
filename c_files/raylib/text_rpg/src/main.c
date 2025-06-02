@@ -1,12 +1,12 @@
-#include "../inc/game_states.h"
-#include "../inc/databases/hero_types_database.h"
-#include "../inc/menus/main_menu.h"
-#include "../inc/menus/map_menu.h"
-#include "../inc/menus/menu.h"
-#include "../inc/player.h"
-#include "../inc/menus/player_selection_menu.h"
-#include "../inc/menus/shop_menu.h"
-#include "../inc/menus/town_menu.h"
+#include "../include/databases/hero_types_database.h"
+#include "../include/game_states.h"
+#include "../include/menus/main_menu.h"
+#include "../include/menus/map_menu.h"
+#include "../include/menus/menu.h"
+#include "../include/menus/player_selection_menu.h"
+#include "../include/menus/shop_menu.h"
+#include "../include/menus/town_menu.h"
+#include "../include/player.h"
 #include <raylib.h>
 
 int
@@ -16,8 +16,10 @@ main(void)
     const int SCREEN_HEIGHT = 800;
     const char SCREEN_TITLE[] = "Text Rpg";
     const Color SCREEN_BACKGROUND = LIGHTGRAY;
+    const int GAME_FPS = 60;
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
+    SetTargetFPS(GAME_FPS);
 
     GameState current_state = STATE_MAIN_MENU;
     int menu_vertical_padding = 40;

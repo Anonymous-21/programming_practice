@@ -1,10 +1,10 @@
 #define _GNU_SOURCE
 
-#include "../inc/menus/player_selection_menu.h"
-#include "../inc/databases/hero_types_database.h"
-#include "../inc/menus/menu.h"
-#include "../inc/player.h"
-#include "../inc/utils.h"
+#include "../../include/menus/player_selection_menu.h"
+#include "../../include/databases/hero_types_database.h"
+#include "../../include/menus/menu.h"
+#include "../../include/player.h"
+#include "../../include/utils.h"
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -100,7 +100,7 @@ player_selection_update(GameState* current_state, bool* player_selected)
         return player_init(player_selection_menu.selected);
     }
 
-    Player dummy_player = {0};
+    Player dummy_player = { 0 };
     return dummy_player;
 }
 
