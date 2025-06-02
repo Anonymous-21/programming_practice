@@ -1,5 +1,5 @@
 #include "../inc/player.h"
-#include "../inc/hero_types_database.h"
+#include "../inc/databases/hero_types_database.h"
 #include <stdio.h>
 #include <stdlib.h>
 

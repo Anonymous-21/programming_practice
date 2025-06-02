@@ -1,7 +1,7 @@
 #ifndef SHOP_MENU_H
 #define SHOP_MENU_H
 
-#include "../inc/game_states.h"
+#include "../game_states.h"
 #include <stdbool.h>
 
 void

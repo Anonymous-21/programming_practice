@@ -1,7 +1,7 @@
 #ifndef MAP_MENU_H
 #define MAP_MENU_H
 
-#include "../inc/game_states.h"
+#include "../game_states.h"
 #include <stdbool.h>
 
 void

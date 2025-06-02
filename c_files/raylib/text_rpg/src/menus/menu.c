@@ -1,6 +1,6 @@
 #define _GNU_SOURCE
 
-#include "../inc/menu.h"
+#include "../inc/menus/menu.h"
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>

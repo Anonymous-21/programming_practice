@@ -1,4 +1,4 @@
-#include "../inc/hero_types_database.h"
+#include "../inc/databases/hero_types_database.h"
 
 const BaseHero hero_types[] = { { "WARRIOR", 90, 8, 8, 1.12f, 1.06f, 1.08f },
                                 { "RANGER", 60, 11, 4, 1.08f, 1.12f, 1.06f },

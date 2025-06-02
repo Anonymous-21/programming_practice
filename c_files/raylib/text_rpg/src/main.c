@@ -1,12 +1,12 @@
 #include "../inc/game_states.h"
-#include "../inc/hero_types_database.h"
-#include "../inc/main_menu.h"
-#include "../inc/map_menu.h"
-#include "../inc/menu.h"
+#include "../inc/databases/hero_types_database.h"
+#include "../inc/menus/main_menu.h"
+#include "../inc/menus/map_menu.h"
+#include "../inc/menus/menu.h"
 #include "../inc/player.h"
-#include "../inc/player_selection_menu.h"
-#include "../inc/shop_menu.h"
-#include "../inc/town_menu.h"
+#include "../inc/menus/player_selection_menu.h"
+#include "../inc/menus/shop_menu.h"
+#include "../inc/menus/town_menu.h"
 #include <raylib.h>
 
 int
@@ -33,7 +33,12 @@ main(void)
     {
         if (IsKeyPressed(KEY_ESCAPE))
         {
+            current_state--;
 
+            if (current_state < STATE_MAIN_MENU)
+            {
+                current_state = STATE_MAIN_MENU;
+            }
             if (current_state == STATE_TOWN_MENU && player_selected)
             {
                 current_state = STATE_MAIN_MENU;
@@ -41,10 +46,6 @@ main(void)
             if (current_state > STATE_TOWN_MENU)
             {
                 current_state = STATE_TOWN_MENU;
-            }
-            else
-            {
-                current_state--;
             }
         }
 

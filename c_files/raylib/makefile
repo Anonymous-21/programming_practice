@@ -1,17 +1,17 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Iinclude -O2
+CFLAGS = -Wall -O2 $(addprefix -I, $(shell find include -type d))
 LDFLAGS = -lraylib -lm -ldl -lpthread -lGL
 
 # Directories
-SRC_DIR = source
+SRC_DIR = src
 INC_DIR = include
-OBJ_DIR = object
+OBJ_DIR = obj
 BIN = game
 
-# Files
-SRCS := $(wildcard $(SRC_DIR)/*.c)
-OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+# Source and object files
+SRCS := $(shell find $(SRC_DIR) -name '*.c')
+OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Default target
 all: $(BIN)
@@ -22,12 +22,12 @@ $(BIN): $(OBJS)
 
 # Compile .c to .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean up
 clean:
-	rm -rf $(OBJ_DIR)/*.o $(BIN)
+	rm -rf $(OBJ_DIR) $(BIN)
 
 # Phony targets
 .PHONY: all clean

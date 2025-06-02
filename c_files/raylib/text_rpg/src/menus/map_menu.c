@@ -1,6 +1,6 @@
-#include "../inc/map_menu.h"
+#include "../inc/menus/map_menu.h"
 #include "../inc/game_states.h"
-#include "../inc/menu.h"
+#include "../inc/menus/menu.h"
 #include <raylib.h>
 
 typedef enum MapMenuState
@@ -15,7 +15,7 @@ typedef enum MapMenuState
 
 } MapMenuState;
 
-extern MapMenuState current_map_menu_state = INVALID;
+static MapMenuState current_map_menu_state = INVALID;
 
 static Menu map_menu;
 static const char* const map_menu_database[] = { "SETTLEMENT ZONES",

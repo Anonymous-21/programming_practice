@@ -1,6 +1,6 @@
-#include "../inc/town_menu.h"
+#include "../inc/menus/town_menu.h"
 #include "../inc/game_states.h"
-#include "../inc/menu.h"
+#include "../inc/menus/menu.h"
 #include <raylib.h>
 
 typedef enum TownMenuState
@@ -38,7 +38,8 @@ town_menu_update(GameState* current_state)
 {
     menu_update(&town_menu);
 
-    if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) && *current_state == STATE_TOWN_MENU)
+    if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
+        *current_state == STATE_TOWN_MENU)
     {
         switch (town_menu.selected)
         {

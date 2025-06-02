@@ -1,7 +1,7 @@
 #ifndef PLAYER_SELECTION_MENU_H
 #define PLAYER_SELECTION_MENU_H
 
-#include "../inc/game_states.h"
+#include "../game_states.h"
 #include <stdbool.h>
 
 typedef struct Player Player;

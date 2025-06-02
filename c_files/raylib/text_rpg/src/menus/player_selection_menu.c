@@ -1,8 +1,8 @@
 #define _GNU_SOURCE
 
-#include "../inc/player_selection_menu.h"
-#include "../inc/hero_types_database.h"
-#include "../inc/menu.h"
+#include "../inc/menus/player_selection_menu.h"
+#include "../inc/databases/hero_types_database.h"
+#include "../inc/menus/menu.h"
 #include "../inc/player.h"
 #include "../inc/utils.h"
 #include <raylib.h>

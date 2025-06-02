@@ -1,4 +1,4 @@
-#include "../inc/enemy_types_database.h"
+#include "../inc/databases/enemy_types_database.h"
 
 const BaseEnemy enemy_types[] = {
     { "Zombie", 50, 5, 1.10f, 1.05f, 4, 1.05f },    { "Goblin", 40, 7, 1.08f, 1.06f, 2, 1.03f },
