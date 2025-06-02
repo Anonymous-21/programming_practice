@@ -1,8 +1,6 @@
-#include "../include/databases/hero_types_database.h"
 #include "../include/game_states.h"
 #include "../include/menus/main_menu.h"
 #include "../include/menus/map_menu.h"
-#include "../include/menus/menu.h"
 #include "../include/menus/player_selection_menu.h"
 #include "../include/menus/shop_menu.h"
 #include "../include/menus/town_menu.h"
@@ -15,7 +13,7 @@ main(void)
     const int SCREEN_WIDTH = 1000;
     const int SCREEN_HEIGHT = 800;
     const char SCREEN_TITLE[] = "Text Rpg";
-    const Color SCREEN_BACKGROUND = LIGHTGRAY;
+    const Color SCREEN_BACKGROUND = SKYBLUE;
     const int GAME_FPS = 60;
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
@@ -35,19 +33,31 @@ main(void)
     {
         if (IsKeyPressed(KEY_ESCAPE))
         {
-            current_state--;
-
-            if (current_state < STATE_MAIN_MENU)
+            switch (current_state)
             {
-                current_state = STATE_MAIN_MENU;
-            }
-            if (current_state == STATE_TOWN_MENU && player_selected)
-            {
-                current_state = STATE_MAIN_MENU;
-            }
-            if (current_state > STATE_TOWN_MENU)
-            {
-                current_state = STATE_TOWN_MENU;
+                case STATE_MAIN_MENU:
+                    break;
+                case STATE_PLAYER_SELECTION_MENU:
+                    current_state = STATE_MAIN_MENU;
+                    break;
+                case STATE_TOWN_MENU:
+                    if (player_selected)
+                    {
+                        current_state = STATE_MAIN_MENU;
+                    }
+                    break;
+                case STATE_MAP_MENU:
+                    current_state = STATE_TOWN_MENU;
+                    break;
+                case STATE_QUEST_MENU:
+                    current_state = STATE_TOWN_MENU;
+                    break;
+                case STATE_SHOP_MENU:
+                    current_state = STATE_TOWN_MENU;
+                    break;
+                case STATE_QUIT:
+                    current_state = STATE_QUIT;
+                    break;
             }
         }
 

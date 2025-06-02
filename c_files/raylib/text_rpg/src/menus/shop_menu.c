@@ -28,7 +28,7 @@ static const int shop_menu_database_size =
 void
 shop_menu_init(int menu_vertical_padding)
 {
-    int font_size = 40;
+    int font_size = 30;
     int text_gap = 20;
     Rectangle layout_rect =
       (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_vertical_padding };

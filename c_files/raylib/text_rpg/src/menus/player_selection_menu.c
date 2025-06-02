@@ -10,26 +10,35 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define STR_LENGTH 64
+
 static Menu player_selection_menu;
 
 static void
 draw_hero_type_summary(int selected)
 {
     // draw line divider
-    DrawLineEx((Vector2){ GetScreenWidth() / 2, 0 },
-               (Vector2){ GetScreenWidth() / 2, GetScreenHeight() },
+    DrawLineEx((Vector2){ GetScreenWidth() / 2.0f, 0 },
+               (Vector2){ GetScreenWidth() / 2.0f, GetScreenHeight() },
                5.0,
                BLACK);
 
-    const char* health = TextFormat("Health: %.2f", hero_types[selected].health);
-    const char* damage = TextFormat("Damage: %.2f", hero_types[selected].damage);
-    const char* defense = TextFormat("Defense: %.2f", hero_types[selected].defense);
-    const char* health_growth =
-      TextFormat("Health Growth: %.2f", hero_types[selected].health_growth);
-    const char* damage_growth =
-      TextFormat("Damage Growth: %.2f", hero_types[selected].damage_growth);
-    const char* defense_growth =
-      TextFormat("Defense Growth: %.2f", hero_types[selected].defense_growth);
+    char health[STR_LENGTH];
+    char damage[STR_LENGTH];
+    char defense[STR_LENGTH];
+    char health_growth[STR_LENGTH];
+    char damage_growth[STR_LENGTH];
+    char defense_growth[STR_LENGTH];
+
+    snprintf(health, STR_LENGTH, "Health: %0.2f\n", hero_types[selected].health);
+    snprintf(damage, STR_LENGTH, "Damage: %0.2f\n", hero_types[selected].damage);
+    snprintf(defense, STR_LENGTH, "Defense: %0.2f\n", hero_types[selected].defense);
+    snprintf(
+      health_growth, STR_LENGTH, "Health Growth: %0.2f\n", hero_types[selected].health_growth);
+    snprintf(
+      damage_growth, STR_LENGTH, "Damage Growth: %0.2f\n", hero_types[selected].damage_growth);
+    snprintf(
+      defense_growth, STR_LENGTH, "Defense Growth: %0.2f\n", hero_types[selected].defense_growth);
 
     const char* arr[] = { health, damage, defense, health_growth, damage_growth, defense_growth };
     const int arr_size = sizeof(arr) / sizeof(arr[0]);
@@ -37,7 +46,7 @@ draw_hero_type_summary(int selected)
     int font_size = 30;
     int text_gap = 20;
     Rectangle layout_rect = (Rectangle){
-        GetScreenWidth() / 2, 0, GetScreenWidth() / 2, GetScreenHeight() - vertical_padding
+        GetScreenWidth() / 2.0f, 0, GetScreenWidth() / 2.0f, GetScreenHeight() - vertical_padding
     };
     Color color = BLACK;
 
