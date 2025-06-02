@@ -3,7 +3,7 @@
 #include "../inc/menu.h"
 #include <raylib.h>
 
-typedef enum
+typedef enum MainMenuState
 {
     NEW_GAME,
     CONTINUE,
@@ -44,13 +44,13 @@ main_menu_update(GameState* current_state, bool player_selected)
         switch (main_menu.selected)
         {
             case NEW_GAME:
-                *current_state = STATE_PLAYER_SELECTION;
+                *current_state = STATE_PLAYER_SELECTION_MENU;
                 break;
 
             case CONTINUE:
                 if (player_selected)
                 {
-                    *current_state = STATE_TOWN;
+                    *current_state = STATE_TOWN_MENU;
                 }
                 else
                 {

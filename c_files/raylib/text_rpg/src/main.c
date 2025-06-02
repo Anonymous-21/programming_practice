@@ -1,13 +1,13 @@
-#include "../inc/game_data.h"
+#include "../inc/game_states.h"
+#include "../inc/hero_types_database.h"
 #include "../inc/main_menu.h"
+#include "../inc/map_menu.h"
 #include "../inc/menu.h"
 #include "../inc/player.h"
 #include "../inc/player_selection_menu.h"
-#include "../inc/game_states.h"
-#include "../inc/hero_types_database.h"
+#include "../inc/shop_menu.h"
+#include "../inc/town_menu.h"
 #include <raylib.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 int
 main(void)
@@ -20,55 +20,31 @@ main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
 
     GameState current_state = STATE_MAIN_MENU;
-    int menu_margin = 40; // 20 up and 20 down
     int menu_vertical_padding = 40;
     bool player_selected = false;
 
     main_menu_init(menu_vertical_padding);
     player_selection_init(menu_vertical_padding);
-    Menu town_menu;
-    Menu map_menu;
-    // Menu quest_menu;
-    Menu shop_menu;
-
-    // Player player;
-
-    ShopType current_shop_type = SHOP_INVALID;
-    MapZone current_map_zone = SHOP_INVALID;
-
-    menu_init(&town_menu,
-              town_menu_items,
-              town_menu_items_size,
-              30,
-              20,
-              (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_margin });
-
-    menu_init(&map_menu,
-              map_menu_items,
-              map_menu_items_size,
-              30,
-              20,
-              (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_margin });
-
-    menu_init(&shop_menu,
-              shop_menu_items,
-              shop_menu_items_size,
-              30,
-              20,
-              (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() - menu_margin });
+    town_menu_init(menu_vertical_padding);
+    map_menu_init(menu_vertical_padding);
+    shop_menu_init(menu_vertical_padding);
 
     while (current_state != STATE_QUIT)
     {
-        if (IsKeyPressed(KEY_ESCAPE) && player_selected)
+        if (IsKeyPressed(KEY_ESCAPE))
         {
-            current_state--;
-            if (current_state == 1)
+
+            if (current_state == STATE_TOWN_MENU && player_selected)
             {
-                current_state = 0;
+                current_state = STATE_MAIN_MENU;
             }
-            if (current_state > 2 && current_state != STATE_QUIT)
+            if (current_state > STATE_TOWN_MENU)
             {
-                current_state = 2;
+                current_state = STATE_TOWN_MENU;
+            }
+            else
+            {
+                current_state--;
             }
         }
 
@@ -82,84 +58,27 @@ main(void)
                 main_menu_update(&current_state, player_selected);
                 break;
 
-            case STATE_PLAYER_SELECTION:
+            case STATE_PLAYER_SELECTION_MENU:
                 player_selection_draw();
                 Player player = player_selection_update(&current_state, &player_selected);
                 break;
 
-            case STATE_TOWN:
-
-                menu_draw(&town_menu);
-                menu_update(&town_menu);
-                if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
-                    current_state == STATE_TOWN)
-                {
-                    switch (town_menu.selected)
-                    {
-                        case 0:
-                            current_state = STATE_MAP;
-                            break;
-                        case 1:
-                            current_state = STATE_QUEST;
-                            break;
-                        case 2:
-                            current_state = STATE_SHOP;
-                            break;
-                    }
-                }
+            case STATE_TOWN_MENU:
+                town_menu_draw();
+                town_menu_update(&current_state);
                 break;
 
-            case STATE_MAP:
+            case STATE_MAP_MENU:
+                map_menu_draw();
+                map_menu_update(&current_state);
+                break;
 
-                menu_draw(&map_menu);
-                menu_update(&map_menu);
-                if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
-                    current_state == STATE_MAP)
-                {
-                    switch (map_menu.selected)
-                    {
-                        case 0:
-                            current_map_zone = MAP_ZONE_SETTLEMENTS;
-                            break;
-                        case 1:
-                            current_map_zone = MAP_ZONE_WILDERNESS;
-                            break;
-                        case 2:
-                            current_map_zone = MAP_ZONE_DUNGEONS;
-                            break;
-                        case 3:
-                            current_map_zone = MAP_ZONE_MYSTICAL;
-                            break;
-                        case 4:
-                            current_map_zone = MAP_ZONE_CONFLICT;
-                            break;
-                    }
-                }
+            case STATE_QUEST_MENU:
                 break;
-            case STATE_QUEST:
-                break;
-            case STATE_SHOP:
-                menu_draw(&shop_menu);
-                menu_update(&shop_menu);
-                if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
-                    current_state == STATE_SHOP)
-                {
-                    switch (shop_menu.selected)
-                    {
-                        case 0:
-                            current_shop_type = SHOP_TYPE_CONSUMABLES;
-                            break;
-                        case 1:
-                            current_shop_type = SHOP_TYPE_WEAPONS;
-                            break;
-                        case 2:
-                            current_shop_type = SHOP_TYPE_ARMORS;
-                            break;
-                        case 3:
-                            current_shop_type = SHOP_TYPE_ACCESSORIES;
-                            break;
-                    }
-                }
+
+            case STATE_SHOP_MENU:
+                shop_menu_draw();
+                shop_menu_update(&current_state);
                 break;
 
             case STATE_QUIT:
@@ -169,15 +88,11 @@ main(void)
         EndDrawing();
     }
 
-    // free(player_selection_menu_items);
-    // player_selection_menu_items = NULL;
-
     main_menu_free();
     player_selection_free();
-    // menu_free(&player_selection_menu);
-    menu_free(&town_menu);
-    menu_free(&map_menu);
-    menu_free(&shop_menu);
+    town_menu_free();
+    map_menu_free();
+    shop_menu_free();
 
     CloseWindow();
 

@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include "../inc/player_selection_menu.h"
 #include "../inc/hero_types_database.h"
 #include "../inc/menu.h"
@@ -6,6 +8,7 @@
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 static Menu player_selection_menu;
 
@@ -52,7 +55,7 @@ player_selection_init(int menu_vertical_padding)
     }
     for (int i = 0; i < hero_types_size; i++)
     {
-        temp_arr[i] = hero_types[i].type;
+        temp_arr[i] = strndup(hero_types[i].type, strlen(hero_types[i].type) + 1);
     }
 
     int font_size = 30;
@@ -67,6 +70,11 @@ player_selection_init(int menu_vertical_padding)
               text_gap,
               layout_rect);
 
+    for (int i = 0; i < hero_types_size; i++)
+    {
+        free(temp_arr[i]);
+        temp_arr[i] = NULL;
+    }
     free(temp_arr);
     temp_arr = NULL;
 }
@@ -80,23 +88,20 @@ player_selection_draw()
 Player
 player_selection_update(GameState* current_state, bool* player_selected)
 {
-    if (player_selected < 0 || player_selected >= hero_types_size)
-    {
-        fprintf(stderr, "Parameter 'selected' out of bounds\n");
-        exit(EXIT_FAILURE);
-    }
-
     menu_update(&player_selection_menu);
     draw_hero_type_summary(player_selection_menu.selected);
 
     if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
-        *current_state == STATE_PLAYER_SELECTION)
+        *current_state == STATE_PLAYER_SELECTION_MENU)
     {
         *player_selected = true;
-        *current_state = STATE_TOWN;
-        
+        *current_state = STATE_TOWN_MENU;
+
         return player_init(player_selection_menu.selected);
     }
+
+    Player dummy_player = {0};
+    return dummy_player;
 }
 
 void
