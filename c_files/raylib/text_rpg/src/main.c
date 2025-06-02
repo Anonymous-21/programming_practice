@@ -26,7 +26,6 @@ main(void)
 
     main_menu_init(menu_vertical_padding);
     player_selection_init(menu_vertical_padding);
-    Menu player_selection_menu;
     Menu town_menu;
     Menu map_menu;
     // Menu quest_menu;
@@ -36,25 +35,6 @@ main(void)
 
     ShopType current_shop_type = SHOP_INVALID;
     MapZone current_map_zone = SHOP_INVALID;
-
-    const char** player_selection_menu_items = malloc(hero_types_size * sizeof(const char*));
-    if (player_selection_menu_items == NULL)
-    {
-        fprintf(stderr, "Memory allocation failed\n");
-        exit(EXIT_FAILURE);
-    }
-
-    for (int i = 0; i < hero_types_size; i++)
-    {
-        player_selection_menu_items[i] = hero_types[i].type;
-    }
-
-    menu_init(&player_selection_menu,
-              player_selection_menu_items,
-              hero_types_size,
-              30,
-              20,
-              (Rectangle){ 0, 0, GetScreenWidth() / 2, GetScreenHeight() - menu_margin });
 
     menu_init(&town_menu,
               town_menu_items,
@@ -103,20 +83,8 @@ main(void)
                 break;
 
             case STATE_PLAYER_SELECTION:
-
-                // menu_draw(&player_selection_menu);
                 player_selection_draw();
                 Player player = player_selection_update(&current_state, &player_selected);
-                // menu_update(&player_selection_menu);
-                // draw_player_selection_details(player_selection_menu.selected);
-
-                // if ((IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) &&
-                //     current_state == STATE_PLAYER_SELECTION)
-                // {
-                //     player_init(&player, player_selection_menu.selected);
-                //     player_selected = true;
-                //     current_state = STATE_TOWN;
-                // }
                 break;
 
             case STATE_TOWN:
@@ -201,12 +169,12 @@ main(void)
         EndDrawing();
     }
 
-    free(player_selection_menu_items);
-    player_selection_menu_items = NULL;
+    // free(player_selection_menu_items);
+    // player_selection_menu_items = NULL;
 
     main_menu_free();
-    // menu_free(&main_menu);
-    menu_free(&player_selection_menu);
+    player_selection_free();
+    // menu_free(&player_selection_menu);
     menu_free(&town_menu);
     menu_free(&map_menu);
     menu_free(&shop_menu);

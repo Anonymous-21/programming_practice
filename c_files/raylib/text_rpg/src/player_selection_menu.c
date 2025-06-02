@@ -7,21 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef enum PlayerSelectionState
-{
-    WARRIOR,
-    RANGER,
-    MAGE,
-    CLERIC,
-    ROGUE,
-    PALADIN,
-    BERSERKER,
-    NECROMANCER,
-    DRUID,
-    MONK
-
-} PlayerSelectionState;
-
 static Menu player_selection_menu;
 
 static void
