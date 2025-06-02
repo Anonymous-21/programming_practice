@@ -80,6 +80,12 @@ player_selection_draw()
 Player
 player_selection_update(GameState* current_state, bool* player_selected)
 {
+    if (player_selected < 0 || player_selected >= hero_types_size)
+    {
+        fprintf(stderr, "Parameter 'selected' out of bounds\n");
+        exit(EXIT_FAILURE);
+    }
+
     menu_update(&player_selection_menu);
     draw_hero_type_summary(player_selection_menu.selected);
 
