@@ -1,9 +1,32 @@
-#include "../include/game_data.h"
+#include "../../include/databases/menus_database.h"
 
-// quests menu data
+// MAIN MENU
+const char* const main_menu_database[] = { "NEW GAME", "CONTINUE", "QUIT" };
+const int main_menu_database_size = sizeof(main_menu_database) / sizeof(main_menu_database[0]);
+
+// TOWN MENU
+const char* const town_menu_database[] = { "MAP", "QUEST", "SHOP" };
+const int town_menu_database_size = sizeof(town_menu_database) / sizeof(town_menu_database[0]);
+
+// SHOP MENU
+const char* const shop_menu_database[] = { "CONSUMABLES", "WEAPONS", "ARMORS", "ACCESSORIES" };
+
+const int shop_menu_database_size = sizeof(shop_menu_database) / sizeof(shop_menu_database[0]);
+
+// MAP MENU
+const char* const map_menu_database[] = { "SETTLEMENT ZONES",
+                                          "WILDERNESS ZONES",
+                                          "DUNGEON ZONES",
+                                          "MYSTICAL ZONES",
+                                          "CONFLICT ZONES" };
+
+const int map_menu_database_size = sizeof(map_menu_database) / sizeof(map_menu_database[0]);
+
+// QUEST MENU
 char* quest_menu_items[] = { 0 };
 int quest_menu_items_size = sizeof(quest_menu_items) / sizeof(quest_menu_items[0]);
 
+// MAP ZONE MENU
 const char* const zone_settlement_items[] = { "WINDMERE VILLAGE",
                                               "IRONHOLD",
                                               "THORNBRIDGE",

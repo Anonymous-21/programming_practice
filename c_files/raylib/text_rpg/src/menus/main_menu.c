@@ -1,6 +1,7 @@
 #include "../../include/menus/main_menu.h"
 #include "../../include/game_states.h"
 #include "../../include/menus/menu.h"
+#include "../../include/databases/menus_database.h"
 #include <raylib.h>
 
 typedef enum MainMenuState
@@ -12,9 +13,6 @@ typedef enum MainMenuState
 } MainMenuState;
 
 static Menu main_menu;
-static const char* const main_menu_database[] = { "NEW GAME", "CONTINUE", "QUIT" };
-static const int main_menu_database_size =
-  sizeof(main_menu_database) / sizeof(main_menu_database[0]);
 
 void
 main_menu_init(int menu_vertical_padding)

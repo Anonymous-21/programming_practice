@@ -1,6 +1,7 @@
 #include "../../include/menus/town_menu.h"
 #include "../../include/game_states.h"
 #include "../../include/menus/menu.h"
+#include "../../include/databases/menus_database.h"
 #include <raylib.h>
 
 typedef enum TownMenuState
@@ -12,9 +13,6 @@ typedef enum TownMenuState
 } TownMenuState;
 
 static Menu town_menu;
-static const char* const town_menu_database[] = { "MAP", "QUEST", "SHOP" };
-static const int town_menu_database_size =
-  sizeof(town_menu_database) / sizeof(town_menu_database[0]);
 
 void
 town_menu_init(int menu_vertical_padding)

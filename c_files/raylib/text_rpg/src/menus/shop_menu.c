@@ -1,4 +1,5 @@
 #include "../../include/menus/shop_menu.h"
+#include "../../include/databases/menus_database.h"
 #include "../../include/game_states.h"
 #include "../../include/menus/menu.h"
 #include <raylib.h>
@@ -17,13 +18,6 @@ typedef enum ShopMenuState
 static ShopMenuState current_shop_menu_state = INVALID;
 
 static Menu shop_menu;
-static const char* const shop_menu_database[] = { "CONSUMABLES",
-                                                  "WEAPONS",
-                                                  "ARMORS",
-                                                  "ACCESSORIES" };
-
-static const int shop_menu_database_size =
-  sizeof(shop_menu_database) / sizeof(shop_menu_database[0]);
 
 void
 shop_menu_init(int menu_vertical_padding)

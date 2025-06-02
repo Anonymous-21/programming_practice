@@ -1,4 +1,5 @@
 #include "../../include/menus/map_menu.h"
+#include "../../include/databases/menus_database.h"
 #include "../../include/game_states.h"
 #include "../../include/menus/menu.h"
 #include <raylib.h>
@@ -18,13 +19,6 @@ typedef enum MapMenuState
 static MapMenuState current_map_menu_state = INVALID;
 
 static Menu map_menu;
-static const char* const map_menu_database[] = { "SETTLEMENT ZONES",
-                                                 "WILDERNESS ZONES",
-                                                 "DUNGEON ZONES",
-                                                 "MYSTICAL ZONES",
-                                                 "CONFLICT ZONES" };
-
-static const int map_menu_database_size = sizeof(map_menu_database) / sizeof(map_menu_database[0]);
 
 void
 map_menu_init(int menu_vertical_padding)
