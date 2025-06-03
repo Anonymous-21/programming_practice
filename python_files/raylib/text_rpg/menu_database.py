@@ -1,0 +1,1 @@
+main_menu_items: list[str] = ["NEW GAME", "CONTINUE", "QUIT"]
