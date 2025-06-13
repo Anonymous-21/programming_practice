@@ -66,13 +66,13 @@ class Enemies:
         self.list: list[Enemy] = []
 
         self.speed: float = 300.0
-        self.speed_increment: float = 10.0
+        self.speed_increment: float = 5.0
 
     def draw(self) -> None:
         for enemy in self.list:
             enemy.draw()
 
-    def update(self, player: Player, score: list[int], game_over: bool) -> bool:
+    def update(self, player: Player, score: list[int]) -> bool:
         # add new enemy
         if (
             len(self.list) <= 0
@@ -83,12 +83,12 @@ class Enemies:
         ):
             self.list.append(Enemy())
 
+        # increment speed
+        self.speed += self.speed_increment * p.get_frame_time()
+
         for enemy in self.list[:]:
             # move enemy
             enemy.update(self.speed)
-
-            # increment speed
-            self.speed += self.speed_increment * p.get_frame_time()
 
             # update score
             if player.rect.x > enemy.rect.x + enemy.rect.width and not enemy.scored:
@@ -97,13 +97,13 @@ class Enemies:
 
             # player collision enemy
             if p.check_collision_recs(player.rect, enemy.rect):
-                game_over = True
+                return True
 
-            # remove enemy
+            # remove offscreen enemy
             if enemy.rect.x + enemy.rect.width + enemy.horizontal_distance < 0:
                 self.list.remove(enemy)
 
-        return game_over
+        return False
 
 
 def main() -> None:
@@ -118,7 +118,7 @@ def main() -> None:
     while not p.window_should_close():
         if not game_over:
             player.update()
-            game_over = enemies.update(player, score, game_over)
+            game_over = enemies.update(player, score)
         else:
             if p.is_key_pressed(p.KeyboardKey.KEY_ENTER):
                 score[0] = 0
