@@ -1,2 +1,2 @@
-# programming_practise
+# programming_practice
 programming practice
